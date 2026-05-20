@@ -26,24 +26,24 @@ const dashboardData = {
     eyebrow:  "2026 U.S. Senate · Georgia",
     title:    "Ossoff vs. Collins",
     subtitle:
-      "With Mike Collins (R-GA-10) as the Republican nominee, this race moves from " +
-      "Lean Republican territory toward a genuine Toss Up. Collins is a credible candidate " +
-      "but lacks the statewide infrastructure, fundraising depth, and crossover appeal " +
-      "that would make him a clear frontrunner. Ossoff enters as a narrow favorite.",
+      "Incumbent Democrat Jon Ossoff faces Republican U.S. Rep. Mike Collins (GA-10) " +
+      "in a Toss Up race that tilts narrowly toward Ossoff. Collins is a credible nominee " +
+      "but lacks the statewide infrastructure, fundraising depth, and suburban Atlanta " +
+      "crossover appeal needed to be a clear frontrunner in a state with an R+3 lean.",
     metrics: [
       { label: "Race",                value: "Georgia U.S. Senate"  },
       { label: "Election date",       value: "November 3, 2026"     },
       { label: "Incumbent",           value: "Jon Ossoff (D)"       },
       { label: "Partisan lean",       value: "R+3 (PVI)"            },
       { label: "Dem win probability", value: "51%", accent: true    },
-      { label: "Current assessment",  value: "Toss Up", note: "Tilts very slightly D" }
+      { label: "Current assessment",  value: "Toss Up", note: "Tilts narrowly D" }
     ],
     callout:
-      "Collins is a credible but not elite nominee. His fundraising gap is severe — " +
-      "Ossoff holds a 17:1 cash-on-hand advantage entering the general. Collins has never " +
-      "run a statewide race, never competed in a swing district, and represents a " +
-      "safe R+30 seat with no transferable competitive experience. The structural R+3 lean " +
-      "of Georgia keeps this close, but Ossoff is a narrow favorite with this matchup.",
+      "Ossoff holds a roughly 15:1 cash-on-hand advantage entering the general — " +
+      "$31.7M to $2.1M as of the Q1 2026 FEC filing. Collins has never run statewide, " +
+      "never competed in a swing district, and represents a safe R+30 seat with no " +
+      "transferable competitive experience. Georgia's structural R+3 lean keeps the race " +
+      "within Collins' reach, but Ossoff is the narrow favorite.",
     keyVariablesHeading: "Top variables driving the outcome",
     keyVariables: [
       { title: "Collins' ability to close the fundraising gap",        impact: "±8 to 12 pts" },
@@ -63,19 +63,6 @@ const dashboardData = {
       party:       "Democrat",
       partyKey:    "D",
       oneLiner:    "First-term incumbent senator; first Jewish senator elected from the South",
-      strengths: [
-        "Massive cash-on-hand advantage — $17.4M vs. Collins' House-level warchest",
-        "Incumbency advantage, statewide name recognition, and built campaign infrastructure",
-        "Strong appeal to suburban Atlanta moderates — Collins is too conservative for these voters",
-        "Investigative journalist background plays well in accountability-focused environment",
-        "Collins' safe-district record gives Ossoff rich opposition research material"
-      ],
-      weaknesses: [
-        "Georgia's underlying R+3 lean remains a structural headwind regardless of opponent",
-        "Midterm environment historically punishes the president's party",
-        "Must turn out the full 2021 coalition — historically difficult without top-of-ticket energy",
-        "National Democratic brand is underwater in Georgia in most environments"
-      ],
       notes:
         "Ossoff's path is clearest of any plausible matchup outside of a Walker-tier collapse. " +
         "Collins lacks the statewide operation to close the resource gap quickly. " +
@@ -88,21 +75,6 @@ const dashboardData = {
       party:       "Republican",
       partyKey:    "R",
       oneLiner:    "U.S. Representative, GA-10 (2023–present); son of former Rep. Mac Collins",
-      strengths: [
-        "Sitting congressman — has held elected office and can claim legislative experience",
-        "Strong Trump loyalist — well-positioned to receive Trump's endorsement and MAGA energy",
-        "Business owner background (family trucking company) — economic credentials in blue-collar Georgia",
-        "Political family legacy — Mac Collins represented GA-3 for a decade; name carries downstate weight",
-        "Credible conservative brand — unified Republican base unlikely to defect"
-      ],
-      weaknesses: [
-        "Has never run statewide — no statewide infrastructure, donor network, or name recognition outside GA-10",
-        "Severe fundraising deficit — Ossoff's $17.4M cash on hand dwarfs a House member's warchest",
-        "GA-10 is R+30 — Collins has zero experience in competitive races; no tested contrast skills",
-        "Voting record in Congress provides Ossoff extensive opposition research material",
-        "Too conservative for Atlanta suburban swing voters — the decisive demographic in Georgia",
-        "Not the strongest candidate available — Kemp, Perdue, or others would be more formidable"
-      ],
       notes:
         "Collins is not a Herschel Walker. He is a legitimate politician with real experience. " +
         "But he is a backbench House member from a safe district asking Georgia to make him senator. " +
@@ -164,40 +136,41 @@ const dashboardData = {
     quarters: [
       {
         period: "Q1 2025",
-        dem: { raised: 3200000, spent: 890000,  coh: 8400000  },
-        rep: { raised: 180000,  spent: 95000,   coh: 310000   },
-        note: "Collins raising at House-member pace. Not yet running for Senate."
+        dem: { raised: null, spent: null, coh: null },
+        rep: { raised: null, spent: null, coh: null },
+        note: "Standalone quarterly figures not directly confirmable from FEC summary or OpenSecrets."
       },
       {
         period: "Q2 2025",
-        dem: { raised: 2800000, spent: 1100000, coh: 10100000 },
-        rep: { raised: 210000,  spent: 110000,  coh: 410000   },
+        dem: { raised: null, spent: null, coh: null },
+        rep: { raised: null, spent: null, coh: null },
         note: ""
       },
       {
         period: "Q3 2025",
-        dem: { raised: 3100000, spent: 1300000, coh: 11900000 },
-        rep: { raised: 190000,  spent: 120000,  coh: 480000   },
+        dem: { raised: null, spent: null, coh: null },
+        rep: { raised: null, spent: null, coh: null },
         note: ""
       },
       {
         period: "Q4 2025",
-        dem: { raised: 4200000, spent: 1600000, coh: 14500000 },
-        rep: { raised: 240000,  spent: 130000,  coh: 590000   },
-        note: "Collins not yet declared for Senate — raising at congressional pace."
+        dem: { raised: null, spent: null, coh: null },
+        rep: { raised: null, spent: null, coh: null },
+        note: ""
       },
       {
         period: "Q1 2026",
-        dem: { raised: 5100000, spent: 2200000, coh: 17400000 },
-        rep: { raised: 1200000, spent: 380000,  coh: 1410000  },
-        note: "Collins declares Senate run mid-Q1. First Senate fundraising quarter — significant ramp but massive gap remains."
+        dem: { raised: null, spent: null, coh: 31700000 },
+        rep: { raised: null, spent: null, coh: 2100000  },
+        note: "Cycle-to-date through Q1 2026 (FEC, via OpenSecrets): Ossoff $57.3M raised, Collins ~$4.3M raised. Standalone Q1-only raised/spent not directly stated by either source."
       }
     ],
     note:
-      "The fundraising gap is the defining structural feature of this race. " +
-      "Ossoff holds a 12:1 cash-on-hand advantage as of Q1 2026. " +
-      "Collins will need to raise $8–10M by Q3 2026 to be competitive on the air in Atlanta media markets. " +
-      "NRSC and outside PAC money will be critical for Collins to remain viable."
+      "Data cutoff: Q1 2026 FEC filings (period ending March 31, 2026). " +
+      "Ossoff holds a roughly 15:1 cash-on-hand advantage — $31.7M vs. $2.1M. " +
+      "Cycle-to-date through Q1 2026: Ossoff $57.3M raised; Collins ~$4.3M raised (Mike Collins For Senate, FEC committee C00544684). " +
+      "Standalone quarterly raised/spent figures for 2025 are not directly reported by FEC summary view or OpenSecrets and are shown as null rather than estimated. " +
+      "Sources: fec.gov candidate/committee pages (S8GA00180, C00718866, H4GA10071, C00544684); opensecrets.org Georgia Senate race coverage (April 2026)."
   },
 
   // ---------------------------------------------------------------------------

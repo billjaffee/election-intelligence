@@ -171,12 +171,6 @@
         badges.appendChild(el("span", { class: "status-badge" }, c.status));
       }
 
-      const strengthsList = el("ul", {});
-      (c.strengths || []).forEach((s) => strengthsList.appendChild(el("li", {}, s)));
-
-      const weaknessesList = el("ul", {});
-      (c.weaknesses || []).forEach((w) => weaknessesList.appendChild(el("li", {}, w)));
-
       grid.appendChild(
         el("article", { class: `candidate-card ${cls}` }, [
           el("div", { class: "candidate-card-header" }, [
@@ -185,16 +179,6 @@
               badges
             ]),
             el("p", { class: "candidate-one-liner" }, c.oneLiner || "")
-          ]),
-          el("div", { class: "candidate-card-body" }, [
-            el("div", {}, [
-              el("p", { class: "candidate-section-title strengths" }, "Strengths"),
-              strengthsList
-            ]),
-            el("div", {}, [
-              el("p", { class: "candidate-section-title weaknesses" }, "Weaknesses"),
-              weaknessesList
-            ])
           ]),
           c.notes
             ? el("div", { class: "candidate-card-footer" }, [
