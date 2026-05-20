@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Federal Election Intelligence Engine</title>
+
+  <!-- Editorial fonts: Cormorant Garamond (display) + Figtree (body) + Space Mono (data) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Figtree:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ── Sticky nav ─────────────────────────────────────────────────────────── -->
+  <header class="site-nav" id="site-nav">
+    <div class="nav-inner">
+      <a href="#overview" class="nav-brand" id="nav-brand">—</a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-menu" id="nav-menu">
+        <ul class="nav-links">
+          <li><a href="#overview"           data-section="overview">Overview</a></li>
+          <li><a href="#candidates"         data-section="candidates">Candidates</a></li>
+          <li><a href="#ratings"            data-section="ratings">Ratings</a></li>
+          <li><a href="#fundraising"        data-section="fundraising">Fundraising</a></li>
+          <li><a href="#model"              data-section="model">Model</a></li>
+          <li><a href="#milestones"         data-section="milestones">Milestones</a></li>
+          <li><a href="#probability-tracker" data-section="probability-tracker">Probability</a></li>
+          <li><a href="#electorate"         data-section="electorate">Electorate</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── Overview (hero, dark) ────────────────────────────────────────────── -->
+    <section id="overview" class="section section--hero">
+      <div class="container">
+        <p class="eyebrow" id="overview-eyebrow"></p>
+        <h1 id="overview-title"></h1>
+        <p class="lede" id="overview-subtitle"></p>
+
+        <div class="metrics-grid" id="overview-metrics"></div>
+
+        <div class="callout" id="overview-callout"></div>
+
+        <h3 class="subsection-heading" id="key-variables-heading"></h3>
+        <div class="key-variables" id="overview-key-variables"></div>
+
+        <p class="citation citation--hero" data-citation-key="overview"></p>
+      </div>
+    </section>
+
+    <!-- ── Candidates ───────────────────────────────────────────────────────── -->
+    <section id="candidates" class="section reveal">
+      <div class="container">
+        <div class="section-label">Candidates</div>
+        <h2 class="section-heading">The Matchup</h2>
+        <p class="section-intro">
+          Head-to-head candidate profiles. Strengths, weaknesses, and strategic outlook for each side.
+        </p>
+        <div class="matchup-grid" id="matchup-grid"></div>
+        <p class="citation" data-citation-key="candidates"></p>
+      </div>
+    </section>
+
+    <!-- ── Race Ratings & National Environment ──────────────────────────────── -->
+    <section id="ratings" class="section section--alt reveal">
+      <div class="container">
+        <div class="section-label">External Forecasters</div>
+        <h2 class="section-heading">Race Ratings</h2>
+        <p class="section-intro" id="ratings-intro"></p>
+
+        <div class="ratings-grid" id="ratings-grid"></div>
+
+        <h3 class="subsection-heading">Rating History</h3>
+        <div class="table-wrap">
+          <table class="data-table" id="ratings-history-table"></table>
+        </div>
+
+        <h3 class="subsection-heading">National Environment</h3>
+        <div class="env-grid" id="env-grid"></div>
+        <p class="analytical-note" id="env-note"></p>
+
+        <p class="citation" data-citation-key="raceRatings"></p>
+      </div>
+    </section>
+
+    <!-- ── Fundraising ──────────────────────────────────────────────────────── -->
+    <section id="fundraising" class="section reveal">
+      <div class="container">
+        <div class="section-label">FEC Data</div>
+        <h2 class="section-heading">Fundraising</h2>
+
+        <div class="fundraising-summary" id="fundraising-summary"></div>
+        <div class="cash-compare-wrap" id="cash-compare-wrap"></div>
+
+        <h3 class="subsection-heading">Quarterly Breakdown</h3>
+        <div class="table-wrap">
+          <table class="data-table" id="fundraising-table"></table>
+        </div>
+
+        <p class="analytical-note" id="fundraising-note"></p>
+        <p class="citation" data-citation-key="fundraising"></p>
+      </div>
+    </section>
+
+    <!-- ── Win Probability Model ────────────────────────────────────────────── -->
+    <section id="model" class="section section--alt reveal">
+      <div class="container">
+        <div class="section-label">Interactive Model</div>
+        <h2 class="section-heading">Win Probability Model</h2>
+        <p class="section-intro" id="model-description"></p>
+
+        <!-- Probability display + meter -->
+        <div class="prob-display-wrap">
+          <div class="prob-display">
+            <div class="prob-display-left">
+              <p class="prob-label">Dem Win Probability</p>
+              <p class="prob-number" id="prob-number">—</p>
+              <p class="prob-tier" id="prob-tier">—</p>
+            </div>
+            <div class="prob-display-right">
+              <p class="prob-baseline-label">Baseline: <span id="prob-baseline-val">—</span></p>
+              <p class="prob-adjustment" id="prob-adjustment"></p>
+            </div>
+          </div>
+
+          <!-- The gradient meter -->
+          <div class="prob-meter-wrap">
+            <div class="prob-meter" id="prob-meter">
+              <div class="prob-needle" id="prob-needle">
+                <div class="needle-circle"></div>
+                <div class="needle-line"></div>
+              </div>
+              <div class="prob-meter-midline"></div>
+            </div>
+            <div class="prob-meter-labels">
+              <span class="meter-label" style="left:0%">Safe R</span>
+              <span class="meter-label" style="left:18%">Likely R</span>
+              <span class="meter-label" style="left:34%">Lean R</span>
+              <span class="meter-label" style="left:50%">Toss Up</span>
+              <span class="meter-label" style="left:66%">Lean D</span>
+              <span class="meter-label" style="left:82%">Likely D</span>
+              <span class="meter-label" style="left:100%">Safe D</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sliders -->
+        <div class="model-sliders" id="model-sliders"></div>
+
+        <!-- Sensitivity table -->
+        <h3 class="subsection-heading" id="sensitivity-heading"></h3>
+        <div class="table-wrap">
+          <table class="data-table" id="sensitivity-table"></table>
+        </div>
+
+        <p class="citation" data-citation-key="winProbabilityModel"></p>
+      </div>
+    </section>
+
+    <!-- ── Milestones ───────────────────────────────────────────────────────── -->
+    <section id="milestones" class="section reveal">
+      <div class="container">
+        <div class="section-label">Timeline</div>
+        <h2 class="section-heading">Key Milestones</h2>
+        <p class="section-intro">
+          Critical dates on the road to election day.
+          <span class="legend-item legend-item--happened">Happened</span>
+          <span class="legend-item legend-item--pending">Pending</span>
+          <span class="legend-item legend-item--overdue">Overdue</span>
+        </p>
+        <ol class="milestone-list" id="milestone-list"></ol>
+        <p class="citation" data-citation-key="milestones"></p>
+      </div>
+    </section>
+
+    <!-- ── Probability Tracker ──────────────────────────────────────────────── -->
+    <section id="probability-tracker" class="section section--alt reveal">
+      <div class="container">
+        <div class="section-label">Historical Estimates</div>
+        <h2 class="section-heading">Probability Tracker</h2>
+        <p class="section-intro" id="probability-description"></p>
+
+        <div class="chart-wrap">
+          <canvas id="probability-chart"></canvas>
+        </div>
+        <div class="probability-log" id="probability-log"></div>
+
+        <p class="citation" data-citation-key="probabilityTracker"></p>
+      </div>
+    </section>
+
+    <!-- ── Electorate (collapsible) ─────────────────────────────────────────── -->
+    <section id="electorate" class="section reveal">
+      <div class="container">
+        <header class="electorate-header" id="electorate-header">
+          <div class="electorate-header-text">
+            <div class="section-label">District Profile</div>
+            <h2 class="section-heading" id="electorate-heading" style="margin-bottom:0.25rem">—</h2>
+            <p class="section-subheading" id="electorate-subheading"></p>
+          </div>
+          <button
+            type="button"
+            class="electorate-toggle-btn"
+            id="electorate-toggle"
+            aria-expanded="false"
+            aria-controls="electorate-collapse"
+            aria-label="Toggle electorate profile">
+            <span class="electorate-chevron" aria-hidden="true">▾</span>
+          </button>
+        </header>
+
+        <div class="electorate-collapse" id="electorate-collapse">
+          <div class="electorate-collapse-inner">
+            <p class="method-note" id="electorate-method-note"></p>
+            <div id="electorate-body"></div>
+            <p class="citation" data-citation-key="electorate"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ───────────────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-line" id="footer-text">—</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
