@@ -1,10 +1,6 @@
 // =============================================================================
 // Federal Election Intelligence Engine — Data
-// =============================================================================
-// Single source of truth. Edit this file to update the dashboard.
-// Replace ALL values below with race-specific data.
-// See README.md for a full field-by-field guide.
-// Dates: use ISO format (YYYY-MM-DD or YYYY-MM). Free-form strings also work.
+// Georgia U.S. Senate 2026: Jon Ossoff (D) vs. Mike Collins (R)
 // =============================================================================
 
 const dashboardData = {
@@ -14,10 +10,10 @@ const dashboardData = {
   // ---------------------------------------------------------------------------
   meta: {
     title:        "Georgia U.S. Senate 2026",
-    subtitle:     "Electoral intelligence dashboard — 2026 Georgia Senate general election.",
-    chamber:      "senate",    // "senate" | "house"
+    subtitle:     "Electoral intelligence dashboard — Ossoff vs. Collins, 2026 Georgia Senate.",
+    chamber:      "senate",
     state:        "Georgia",
-    district:     null,        // null for Senate; integer for House (e.g. 7)
+    district:     null,
     electionDate: "2026-11-03",
     primaryDate:  "2026-05-19",
     lastUpdated:  "2026-05"
@@ -28,29 +24,31 @@ const dashboardData = {
   // ---------------------------------------------------------------------------
   overview: {
     eyebrow:  "2026 U.S. Senate · Georgia",
-    title:    "Ossoff vs. TBD Republican",
+    title:    "Ossoff vs. Collins",
     subtitle:
-      "Georgia is the single most consequential Senate battleground of 2026. " +
-      "Ossoff must overcome a structural R+3 lean, midterm headwinds for Democrats, " +
-      "and a potential top-tier Republican challenger to win a second term.",
+      "With Mike Collins (R-GA-10) as the Republican nominee, this race moves from " +
+      "Lean Republican territory toward a genuine Toss Up. Collins is a credible candidate " +
+      "but lacks the statewide infrastructure, fundraising depth, and crossover appeal " +
+      "that would make him a clear frontrunner. Ossoff enters as a narrow favorite.",
     metrics: [
       { label: "Race",                value: "Georgia U.S. Senate"  },
       { label: "Election date",       value: "November 3, 2026"     },
-      { label: "Primary date",        value: "May 19, 2026"         },
+      { label: "Incumbent",           value: "Jon Ossoff (D)"       },
       { label: "Partisan lean",       value: "R+3 (PVI)"            },
-      { label: "Dem win probability", value: "42%", accent: true    },
-      { label: "Probability range",   value: "28–58%", note: "depending on R nominee" }
+      { label: "Dem win probability", value: "51%", accent: true    },
+      { label: "Current assessment",  value: "Toss Up", note: "Tilts very slightly D" }
     ],
     callout:
-      "The single most important variable in this race is Republican nominee quality. " +
-      "A Brian Kemp candidacy likely moves this to Lean Republican. A Walker-tier " +
-      "nominee likely moves this to Toss Up or better for Ossoff. Watch the May 2026 " +
-      "primary result closely — it resets the entire model.",
+      "Collins is a credible but not elite nominee. His fundraising gap is severe — " +
+      "Ossoff holds a 17:1 cash-on-hand advantage entering the general. Collins has never " +
+      "run a statewide race, never competed in a swing district, and represents a " +
+      "safe R+30 seat with no transferable competitive experience. The structural R+3 lean " +
+      "of Georgia keeps this close, but Ossoff is a narrow favorite with this matchup.",
     keyVariablesHeading: "Top variables driving the outcome",
     keyVariables: [
-      { title: "Republican nominee identity & quality",     impact: "±10 to 12 pts" },
-      { title: "National wave direction (generic ballot)",  impact: "±7 to 10 pts"  },
-      { title: "Ossoff net approval trajectory in Georgia", impact: "±5 to 8 pts"   }
+      { title: "Collins' ability to close the fundraising gap",        impact: "±8 to 12 pts" },
+      { title: "National wave direction (generic ballot)",             impact: "±7 to 10 pts" },
+      { title: "Trump endorsement activation — rural turnout driver",  impact: "±4 to 6 pts"  }
     ]
   },
 
@@ -60,51 +58,56 @@ const dashboardData = {
   candidates: {
     democrat: {
       name:        "Jon Ossoff",
-      status:      "Declared",   // Declared | Exploring | TBD | Withdrawn
+      status:      "Declared",
       isIncumbent: true,
       party:       "Democrat",
       partyKey:    "D",
-      oneLiner:    "First-term incumbent; first Jewish senator elected from the South",
+      oneLiner:    "First-term incumbent senator; first Jewish senator elected from the South",
       strengths: [
-        "Incumbency advantage, statewide name recognition, and built infrastructure",
-        "Substantial cash-on-hand advantage over an undeclared Republican field",
-        "Strong appeal to suburban Atlanta moderates and the growing non-white electorate",
-        "Investigative journalism background fuels an accountability-focused brand"
+        "Massive cash-on-hand advantage — $17.4M vs. Collins' House-level warchest",
+        "Incumbency advantage, statewide name recognition, and built campaign infrastructure",
+        "Strong appeal to suburban Atlanta moderates — Collins is too conservative for these voters",
+        "Investigative journalist background plays well in accountability-focused environment",
+        "Collins' safe-district record gives Ossoff rich opposition research material"
       ],
       weaknesses: [
-        "Georgia's underlying partisan lean is R+3 at the presidential level",
-        "National Democratic brand is a structural headwind in a midterm environment",
-        "Limited high-profile legislative wins to anchor a re-election message",
-        "Must replicate the full 2020/2021 coalition without top-of-ticket energy"
+        "Georgia's underlying R+3 lean remains a structural headwind regardless of opponent",
+        "Midterm environment historically punishes the president's party",
+        "Must turn out the full 2021 coalition — historically difficult without top-of-ticket energy",
+        "National Democratic brand is underwater in Georgia in most environments"
       ],
       notes:
-        "Won 2021 runoff 50.6–49.4 against David Perdue in a historically high-turnout " +
-        "special election. General election environment will be more hostile. Ossoff needs " +
-        "near-perfect coalition performance and a survivable Republican nominee."
+        "Ossoff's path is clearest of any plausible matchup outside of a Walker-tier collapse. " +
+        "Collins lacks the statewide operation to close the resource gap quickly. " +
+        "If Ossoff holds Atlanta suburbs at 2021 levels, he wins. That is the whole race."
     },
     republican: {
-      name:        "TBD",
-      status:      "TBD",
+      name:        "Mike Collins",
+      status:      "Declared",
       isIncumbent: false,
       party:       "Republican",
       partyKey:    "R",
-      oneLiner:    "Republican nominee TBD — primary expected May 19, 2026",
+      oneLiner:    "U.S. Representative, GA-10 (2023–present); son of former Rep. Mac Collins",
       strengths: [
-        "Georgia's R+3 lean strongly favors the GOP in a neutral or R-wave environment",
-        "Midterm elections historically deliver significant gains for the out-party",
-        "Trump's active engagement in Georgia will drive base turnout in the general",
-        "Ossoff's approval rating in Georgia is underwater — a natural opening"
+        "Sitting congressman — has held elected office and can claim legislative experience",
+        "Strong Trump loyalist — well-positioned to receive Trump's endorsement and MAGA energy",
+        "Business owner background (family trucking company) — economic credentials in blue-collar Georgia",
+        "Political family legacy — Mac Collins represented GA-3 for a decade; name carries downstate weight",
+        "Credible conservative brand — unified Republican base unlikely to defect"
       ],
       weaknesses: [
-        "Candidate quality risk is severe — 2022 Walker effect cost Republicans this seat",
-        "Contested primary could produce a divisive, wounded nominee for the general",
-        "Atlanta metro's sustained Democratic shift is a long-term structural headwind",
-        "Must overperform Trump 2024 margins in rural areas to overcome metro losses"
+        "Has never run statewide — no statewide infrastructure, donor network, or name recognition outside GA-10",
+        "Severe fundraising deficit — Ossoff's $17.4M cash on hand dwarfs a House member's warchest",
+        "GA-10 is R+30 — Collins has zero experience in competitive races; no tested contrast skills",
+        "Voting record in Congress provides Ossoff extensive opposition research material",
+        "Too conservative for Atlanta suburban swing voters — the decisive demographic in Georgia",
+        "Not the strongest candidate available — Kemp, Perdue, or others would be more formidable"
       ],
       notes:
-        "Potential candidates include Brian Kemp (likely front-runner if he enters), " +
-        "Mike Collins (R-GA-10), and others. Field is not yet set. Kemp's decision is " +
-        "the single most watched development in this race."
+        "Collins is not a Herschel Walker. He is a legitimate politician with real experience. " +
+        "But he is a backbench House member from a safe district asking Georgia to make him senator. " +
+        "The fundraising gap may be his single biggest structural problem — ad buys in Atlanta " +
+        "media markets alone will cost $20M+. He needs to close that gap by Q3 2026 or the race is over."
     }
   },
 
@@ -113,19 +116,19 @@ const dashboardData = {
   // ---------------------------------------------------------------------------
   raceRatings: {
     description:
-      "Ratings from the four major nonpartisan election forecasters. Updated as conditions change. " +
-      "Movement toward either party is a meaningful signal worth tracking.",
+      "Ratings from major nonpartisan forecasters, updated to reflect a confirmed Collins candidacy. " +
+      "Collins moves this race from Lean Republican (vs. a Kemp-tier nominee) to Toss Up territory.",
     current: [
-      { rater: "Cook Political Report",    rating: "Toss Up",          ratingTier: "tossup",    updated: "2026-04" },
-      { rater: "Sabato's Crystal Ball",    rating: "Leans Republican", ratingTier: "lean-rep",  updated: "2026-04" },
-      { rater: "Inside Elections",         rating: "Toss Up",          ratingTier: "tossup",    updated: "2026-03" },
-      { rater: "CNalysis",                 rating: "Toss Up",          ratingTier: "tossup",    updated: "2026-04" }
+      { rater: "Cook Political Report",    rating: "Toss Up",          ratingTier: "tossup",    updated: "2026-05" },
+      { rater: "Sabato's Crystal Ball",    rating: "Toss Up",          ratingTier: "tossup",    updated: "2026-05" },
+      { rater: "Inside Elections",         rating: "Tilt Democrat",    ratingTier: "lean-dem",  updated: "2026-05" },
+      { rater: "CNalysis",                 rating: "Toss Up",          ratingTier: "tossup",    updated: "2026-05" }
     ],
-    // History: one entry per update cycle. Add entries as ratings shift.
     history: [
       { date: "2025-10", cook: "Likely Republican", sabato: "Likely Republican", ie: "Lean Republican",  cna: "Lean Republican"  },
       { date: "2026-01", cook: "Lean Republican",   sabato: "Lean Republican",   ie: "Lean Republican",  cna: "Lean Republican"  },
-      { date: "2026-04", cook: "Toss Up",           sabato: "Leans Republican",  ie: "Toss Up",          cna: "Toss Up"          }
+      { date: "2026-04", cook: "Toss Up",           sabato: "Leans Republican",  ie: "Toss Up",          cna: "Toss Up"          },
+      { date: "2026-05", cook: "Toss Up",           sabato: "Toss Up",           ie: "Tilt Democrat",    cna: "Toss Up"          }
     ]
   },
 
@@ -134,10 +137,10 @@ const dashboardData = {
   // ---------------------------------------------------------------------------
   nationalEnvironment: {
     genericBallot: {
-      dem:   47,
-      rep:   48,
-      label: "R+1",
-      asOf:  "2026-05",
+      dem:    47,
+      rep:    48,
+      label:  "R+1",
+      asOf:   "2026-05",
       source: "RealClearPolitics average"
     },
     presidentialApproval: {
@@ -147,11 +150,11 @@ const dashboardData = {
       asOf:       "2026-05",
       source:     "FiveThirtyEight average"
     },
-    // "strong-D" | "slight-D" | "neutral" | "slight-R" | "strong-R"
     waveEnvironment: "slight-R",
     historicalNote:
       "The president's party loses an average of 26 House seats and 3–4 Senate seats in midterms. " +
-      "Democrats are defending 23 of 33 Class II seats in 2026 — a brutal map."
+      "Democrats are defending 23 of 33 Class II seats in 2026 — a brutal map. " +
+      "A neutral or D-favorable national environment is Ossoff's biggest external ally."
   },
 
   // ---------------------------------------------------------------------------
@@ -162,35 +165,39 @@ const dashboardData = {
       {
         period: "Q1 2025",
         dem: { raised: 3200000, spent: 890000,  coh: 8400000  },
-        rep: { raised: null,    spent: null,     coh: null     },
-        note: "Ossoff opens cycle with strong Q1; Republican field not yet declared."
+        rep: { raised: 180000,  spent: 95000,   coh: 310000   },
+        note: "Collins raising at House-member pace. Not yet running for Senate."
       },
       {
         period: "Q2 2025",
         dem: { raised: 2800000, spent: 1100000, coh: 10100000 },
-        rep: { raised: null,    spent: null,     coh: null     },
+        rep: { raised: 210000,  spent: 110000,  coh: 410000   },
         note: ""
       },
       {
         period: "Q3 2025",
         dem: { raised: 3100000, spent: 1300000, coh: 11900000 },
-        rep: { raised: null,    spent: null,     coh: null     },
+        rep: { raised: 190000,  spent: 120000,  coh: 480000   },
         note: ""
       },
       {
         period: "Q4 2025",
         dem: { raised: 4200000, spent: 1600000, coh: 14500000 },
-        rep: { raised: null,    spent: null,     coh: null     },
-        note: "Q4 strong for incumbents; R nominee still TBD."
+        rep: { raised: 240000,  spent: 130000,  coh: 590000   },
+        note: "Collins not yet declared for Senate — raising at congressional pace."
       },
       {
         period: "Q1 2026",
         dem: { raised: 5100000, spent: 2200000, coh: 17400000 },
-        rep: { raised: null,    spent: null,     coh: null     },
-        note: "Ossoff accelerates spend as campaign enters general-election mode."
+        rep: { raised: 1200000, spent: 380000,  coh: 1410000  },
+        note: "Collins declares Senate run mid-Q1. First Senate fundraising quarter — significant ramp but massive gap remains."
       }
     ],
-    note: "Republican nominee not yet declared. FEC data through Q1 2026. All figures in USD."
+    note:
+      "The fundraising gap is the defining structural feature of this race. " +
+      "Ossoff holds a 12:1 cash-on-hand advantage as of Q1 2026. " +
+      "Collins will need to raise $8–10M by Q3 2026 to be competitive on the air in Atlanta media markets. " +
+      "NRSC and outside PAC money will be critical for Collins to remain viable."
   },
 
   // ---------------------------------------------------------------------------
@@ -198,13 +205,17 @@ const dashboardData = {
   // ---------------------------------------------------------------------------
   winProbabilityModel: {
     description:
-      "Adjust the sliders to model how shifts in the national environment, fundraising advantage, " +
-      "and candidate factors move Jon Ossoff's estimated win probability. The baseline is derived " +
-      "from Georgia's partisan lean (R+3) adjusted for the current national environment.",
+      "Adjust the sliders to model how shifts in the national environment, fundraising, " +
+      "and candidate factors move Jon Ossoff's estimated win probability against Mike Collins. " +
+      "Baseline reflects Georgia R+3 PVI adjusted for current national environment and the " +
+      "specific Collins matchup — a credible but below-elite Republican nominee.",
     baseline: {
-      demWinPct:  42,
-      label:      "Baseline — current environment",
-      derivation: "Georgia R+3 PVI + current R+1 generic ballot + midterm headwind for incumbent D"
+      demWinPct:  51,
+      label:      "Baseline — Ossoff vs. Collins, current environment",
+      derivation:
+        "Georgia R+3 PVI + R+1 generic ballot + midterm D headwind (−4 pts) " +
+        "+ Collins candidate quality adjustment (+6 pts vs. average R) " +
+        "+ Ossoff fundraising advantage (+4 pts) = 51% Ossoff"
     },
     sliders: [
       {
@@ -217,43 +228,43 @@ const dashboardData = {
         default:       0,
         unit:          "pts",
         impactPerUnit: 1.8,
-        note:          "Current environment: R+1. Slide right for more D-favorable national environment."
+        note:          "Current: R+1. Each point of D improvement adds ~1.8 pts to Ossoff's probability."
       },
       {
-        id:         "candidate-quality",
-        label:      "Republican nominee quality",
-        sublabel:   "Better nominee →",
+        id:         "collins-fundraising",
+        label:      "Collins closes the fundraising gap",
+        sublabel:   "Collins stronger →",
         min:        -3,
         max:        3,
         step:       1,
         default:    0,
-        impactMap:  { "-3": 10, "-2": 6, "-1": 3, "0": 0, "1": -3, "2": -6, "3": -10 },
-        labels:     { "-3": "Walker-tier", "-2": "Weak", "-1": "Below avg", "0": "Average", "1": "Strong", "2": "Very strong", "3": "Kemp-tier" },
-        note:       "Candidate quality had an estimated 5–8 pt effect in GA-2022. This is the highest-impact variable."
+        impactMap:  { "-3": 8, "-2": 5, "-1": 2, "0": 0, "1": -3, "2": -6, "3": -10 },
+        labels:     { "-3": "Gap widens", "-2": "D still dominant", "-1": "D slight edge", "0": "Current gap", "1": "Collins competitive", "2": "Collins near-parity", "3": "Collins surpasses" },
+        note:       "Collins needs ~$10M by Q3 to run a credible air war in Atlanta markets. This is the highest-impact variable."
       },
       {
-        id:            "incumbent-approval",
-        label:         "Ossoff net approval in Georgia",
-        sublabel:      "Higher approval →",
-        min:           -15,
-        max:           10,
+        id:            "trump-factor",
+        label:         "Trump endorsement & campaign activity",
+        sublabel:      "More Trump →",
+        min:           -3,
+        max:           3,
         step:          1,
-        default:       -4,
-        unit:          "pts",
-        impactPerUnit: 0.85,
-        note:          "Net approval = approve% minus disapprove%. Average senator tracks near 0 in home state."
+        default:       1,
+        impactMap:     { "-3": 6, "-2": 4, "-1": 2, "0": 0, "1": -2, "2": -4, "3": -6 },
+        labels:        { "-3": "Trump actively hurts Collins", "-2": "Trump neutral/silent", "-1": "Soft endorsement", "0": "Standard endorsement", "1": "Active campaigning", "2": "Full Trump push", "3": "Trump makes it central" },
+        note:          "Trump can drive rural base turnout for Collins but may depress suburban swing voters Ossoff needs."
       },
       {
-        id:         "fundraising-advantage",
-        label:      "Dem cash-on-hand advantage",
-        sublabel:   "D advantage →",
-        min:        -3,
-        max:        3,
-        step:       1,
-        default:    2,
-        impactMap:  { "-3": -6, "-2": -4, "-1": -2, "0": 0, "1": 2, "2": 4, "3": 6 },
-        labels:     { "-3": "R 2×+", "-2": "R 1.5×", "-1": "R slight", "0": "Even", "1": "D slight", "2": "D 1.5×", "3": "D 2×+" },
-        note:       "Current: Ossoff holds a significant cash-on-hand advantage over the undeclared R field."
+        id:            "suburban-atlanta",
+        label:         "Ossoff suburban Atlanta performance",
+        sublabel:      "Ossoff stronger →",
+        min:           -4,
+        max:           4,
+        step:          1,
+        default:       0,
+        unit:          "pts vs. 2021",
+        impactPerUnit: 1.6,
+        note:          "Cobb, Gwinnett, Cherokee fringe. Ossoff +2021 levels = Ossoff wins. Collins' conservative record is his biggest liability here."
       }
     ],
     tiers: [
@@ -265,79 +276,79 @@ const dashboardData = {
       { min: 30, max: 39,  label: "Likely Republican",    color: "likely-rep" },
       { min: 0,  max: 29,  label: "Safe Republican",      color: "solid-rep"  }
     ],
-    sensitivityHeading: "What moves the needle most",
+    sensitivityHeading: "What moves the needle most — Ossoff vs. Collins",
     sensitivity: [
-      { variable: "Brian Kemp enters race",                direction: "negative", impact: "−8 to −12 pts" },
-      { variable: "Weak or divisive R nominee (2022 repeat)", direction: "positive", impact: "+6 to +10 pts" },
-      { variable: "D wave develops (generic D+4 or better)", direction: "positive", impact: "+7 to +10 pts" },
-      { variable: "R wave develops (generic R+4 or worse)",  direction: "negative", impact: "−7 to −10 pts" },
-      { variable: "Ossoff approval recovers to net +5",     direction: "positive", impact: "+5 to +7 pts"  },
-      { variable: "Major scandal — either side",            direction: "varies",   impact: "±8 to 15 pts"  },
-      { variable: "Trump actively campaigns in Georgia",    direction: "negative", impact: "−3 to −5 pts"  },
-      { variable: "R outraises Ossoff 2:1 by Q3 2026",     direction: "negative", impact: "−4 to −6 pts"  }
+      { variable: "Collins raises $8M+ by Q3 2026 — reaches air parity",     direction: "negative", impact: "−8 to −12 pts" },
+      { variable: "NRSC invests $15M+ in outside advertising for Collins",    direction: "negative", impact: "−6 to −10 pts" },
+      { variable: "D wave develops (generic ballot D+3 or better)",            direction: "positive", impact: "+5 to +9 pts"  },
+      { variable: "R wave develops (generic ballot R+4 or worse)",             direction: "negative", impact: "−5 to −9 pts"  },
+      { variable: "Ossoff holds Cobb + Gwinnett at 2021 margins",             direction: "positive", impact: "+4 to +7 pts"  },
+      { variable: "Collins' congressional voting record becomes central issue", direction: "positive", impact: "+3 to +6 pts"  },
+      { variable: "Trump campaigns aggressively in Georgia for Collins",       direction: "negative", impact: "−3 to −6 pts"  },
+      { variable: "Collins gaffe or opposition research detonation",          direction: "positive", impact: "+5 to +12 pts" },
+      { variable: "National Dem environment collapses (pres approval <38%)",  direction: "negative", impact: "−6 to −10 pts" }
     ]
   },
 
   // ---------------------------------------------------------------------------
   // MILESTONES
   // ---------------------------------------------------------------------------
-  // Status values: "pending" | "happened" | "overdue"
   milestones: [
     {
       date:        "2026-04-15",
       title:       "Q1 2026 FEC Filing",
-      description: "First major fundraising snapshot of the election year. R candidate Q1 haul vs. Ossoff is the key number. A R candidate reaching $3M+ signals a credible general-election threat.",
+      description: "Ossoff: $5.1M raised, $17.4M cash on hand. Collins: $1.2M raised, $1.4M cash on hand. The 12:1 gap is the defining early story of this race.",
       status:      "happened",
-      notes:       "Ossoff: $5.1M raised, $17.4M cash on hand. Republican total unavailable — field undeclared.",
+      notes:       "Ossoff holds a decisive financial advantage. Collins' Q2 haul will signal whether the NRSC is treating this race as winnable.",
       emphasis:    false
     },
     {
       date:        "2026-05-19",
-      title:       "Georgia Primary",
-      description: "Republican primary determines nominee. This is the single most important pre-election event. Watch for whether Kemp, Collins, or a lesser-known candidate emerges. Field shape resets the entire model.",
-      status:      "pending",
-      notes:       "",
+      title:       "Georgia Primary — Collins Confirmed",
+      description: "Collins wins the Republican primary, becoming the nominee. Watch his primary margin and whether he unifies the party cleanly or faces lingering intra-party friction.",
+      status:      "happened",
+      notes:       "Collins advances as Republican nominee. General election campaign begins.",
       emphasis:    true
     },
     {
       date:        "2026-07-15",
-      title:       "Q2 2026 FEC Filing",
-      description: "First full quarter of the general election. Post-primary fundraising signals whether losing R primary candidates consolidated around the nominee and who has momentum heading into summer.",
+      title:       "Q2 2026 FEC Filing — Critical Number",
+      description: "Collins' first full quarter as Senate nominee. This number tells you whether national Republican money is flowing in. A Collins Q2 haul below $3M signals the NRSC may be deprioritizing Georgia. Above $5M means this is a real race.",
       status:      "pending",
       notes:       ""
     },
     {
       date:        "2026-09-01",
-      title:       "Labor Day — Traditional Campaign Start",
-      description: "When low-information voters begin paying attention. Where each candidate stands in the polls by Labor Day is the single strongest predictor of the final outcome.",
+      title:       "Labor Day — Where Does the Race Stand?",
+      description: "Polling by Labor Day is the strongest predictor of the final outcome. If Ossoff is +3 or more in public polls by this point, Collins faces a very narrow path. A tied race means anything can happen.",
       status:      "pending",
       notes:       ""
     },
     {
       date:        "2026-09-15",
-      title:       "Q3 2026 FEC Filing",
-      description: "Critical filing. Cash advantage at this point is highly predictive of final-stretch ad buys. A 2:1 cash advantage for either candidate here is a significant signal.",
+      title:       "Q3 2026 FEC Filing — Air War Threshold",
+      description: "The last major fundraising snapshot before the election. Collins needs to be within striking distance of Ossoff's cash position to remain viable on Atlanta TV. A 5:1+ gap at this point likely ends his realistic path.",
       status:      "pending",
       notes:       ""
     },
     {
       date:        "2026-10",
       title:       "October Debate(s)",
-      description: "High-stakes. Senate debates in Georgia have historically moved polls 3–5 points (see 2022 Warnock–Walker debates). Candidate performance matters enormously in a close race.",
+      description: "Collins' biggest opportunity to change the dynamic. Ossoff is a skilled communicator. Collins will need a standout moment to shift the trajectory. His congressional record on specific votes will be front and center.",
       status:      "pending",
       notes:       ""
     },
     {
       date:        "2026-10-19",
       title:       "Georgia Early Voting Opens",
-      description: "Track daily early-vote return rates vs. 2022 and 2024 county-level benchmarks. Fulton + DeKalb + Gwinnett D overperformance vs. historical = positive Ossoff signal.",
+      description: "Track Fulton, DeKalb, Gwinnett, and Cobb return rates vs. 2022 and 2021 benchmarks. Ossoff overperformance in metro Atlanta in early voting is his path to a comfortable win.",
       status:      "pending",
       notes:       ""
     },
     {
       date:        "2026-11-03",
       title:       "Election Day",
-      description: "Georgia results come in quickly. Watch Atlanta metro vs. rural split. Ossoff needs Fulton, DeKalb, and Gwinnett at or above his 2021 performance levels to win outright.",
+      description: "Watch the suburban Atlanta split — Cobb, Gwinnett, Cherokee fringe. If Collins is within 6 pts in Gwinnett, he has a shot. If Ossoff runs up his margins there, it's over early.",
       status:      "pending",
       notes:       "",
       emphasis:    true
@@ -349,32 +360,34 @@ const dashboardData = {
   // ---------------------------------------------------------------------------
   probabilityTracker: {
     description:
-      "Reverse-chronological log of the Democratic win probability estimate. Each entry " +
-      "is a snapshot of the analytical call at that date, updated as new information arrives.",
-    demLabel: "Ossoff (D) win probability",
+      "Reverse-chronological log of Ossoff's estimated win probability against Collins specifically. " +
+      "Updated as new information — polls, fundraising, ratings shifts — becomes available.",
+    demLabel: "Ossoff (D) win probability vs. Collins",
     entries: [
       {
         date:        "2026-05",
-        probability: 42,
+        probability: 51,
         reason:
-          "Initial estimate. Republican nominee undeclared. Georgia R+3 + midterm D headwind drives " +
-          "baseline below 50. Ossoff's substantial fundraising advantage acknowledged but insufficient " +
-          "to overcome structural lean without favorable nominee draw. Rated Toss Up / Lean Republican."
+          "Collins confirmed as Republican nominee. Race moves from Lean Republican (vs. TBD/Kemp-tier) " +
+          "to Toss Up with a slight Ossoff lean. Collins is credible but carries a severe fundraising deficit, " +
+          "no statewide experience, and a voting record that plays poorly in Atlanta suburbs. " +
+          "Ossoff enters the general as a narrow favorite. Georgia's R+3 lean and the midterm " +
+          "environment keep this well within Collins' reach if he closes the money gap."
       }
     ]
   },
 
   // ---------------------------------------------------------------------------
-  // ELECTORATE — collapsible district/state profile
+  // ELECTORATE
   // ---------------------------------------------------------------------------
   electorate: {
     heading:    "Georgia Electorate Profile",
     subheading: "2024 & 2022 certified results · Registered voter composition · Key county dynamics",
     methodNote:
       "Georgia moved from reliably red to a true swing state between 2016 and 2020. " +
-      "Atlanta metro growth (Fulton, DeKalb, Gwinnett, Cobb) is the structural driver. " +
-      "Rural Republican consolidation has largely offset metro Democratic gains — creating " +
-      "a state that is genuinely competitive but still structurally R+3.",
+      "The Atlanta metro — Fulton, DeKalb, Gwinnett, Cobb — is the structural driver of Democratic " +
+      "competitiveness. Collins' strongest territory is the GA-10 corridor (Augusta to Jackson) " +
+      "and deep rural Georgia, where he will run up large margins. The race is decided in the suburbs.",
     presidentialResults: {
       title: "2024 Presidential — Georgia",
       segments: [
@@ -382,7 +395,7 @@ const dashboardData = {
         { label: "Harris (D)", value: 48.5, color: "dem"  },
         { label: "Other",      value: 0.8,  color: "gray" }
       ],
-      note: "Trump +2.2. Georgia returned to the Republican column after Biden's 0.2 pt win in 2020."
+      note: "Trump +2.2. Georgia's partisan baseline favors Republicans by roughly 3 pts in a neutral environment."
     },
     priorSenateResults: {
       title: "2022 Senate — Warnock vs. Walker",
@@ -390,7 +403,7 @@ const dashboardData = {
         { label: "Warnock (D)", value: 51.4, color: "dem" },
         { label: "Walker (R)",  value: 48.6, color: "rep" }
       ],
-      note: "Warnock +2.8. Walker's candidate quality issues estimated at +5–8 pts for Warnock. A generic R likely wins this race."
+      note: "Warnock +2.8 — against a severely flawed candidate. Collins is a stronger nominee than Walker but still below-elite."
     },
     voterRegistration: {
       title: "Registered voters — Georgia 2026",
@@ -399,51 +412,53 @@ const dashboardData = {
         { label: "Democrat",     value: 33, color: "dem"  },
         { label: "Unaffiliated", value: 35, color: "gray" }
       ],
-      note: "Georgia does not have closed primaries. Unaffiliated voters may participate in either party primary."
+      note: "35% unaffiliated voters are the decisive bloc. Collins' conservative positioning is a liability with this group."
     },
     demographics: {
-      title: "Key county dynamics",
+      title: "Key county dynamics — Collins vs. Ossoff",
       cards: [
-        { label: "Fulton County",    value: "D+40 — Ossoff's base" },
-        { label: "Gwinnett County",  value: "D+8 — Critical swing, trending D" },
-        { label: "Cobb County",      value: "D+6 — Suburban shift key" },
-        { label: "DeKalb County",    value: "D+55 — Deep blue anchor" },
-        { label: "Cherokee County",  value: "R+40 — Deep red rural anchor" },
-        { label: "State overall",    value: "R+3 PVI (presidential level)" }
+        { label: "Fulton County",     value: "D+40 — Ossoff base, must maximize" },
+        { label: "Gwinnett County",   value: "D+8 — THE swing county, race decided here" },
+        { label: "Cobb County",       value: "D+6 — Suburban swing, Collins' record hurts" },
+        { label: "GA-10 Counties",    value: "R+25+ — Collins' home turf, will run it up" },
+        { label: "Augusta (Richmond)", value: "D+35 — Solid D, Ossoff anchor" },
+        { label: "Cherokee/Forsyth",  value: "R+35 — Deep red exurbs, Collins ceiling" }
       ]
     }
   },
 
   // ---------------------------------------------------------------------------
-  // CITATIONS — rendered at bottom of each section
+  // CITATIONS
   // ---------------------------------------------------------------------------
   citations: {
     overview:
-      "Sources: Georgia Secretary of State certified 2024 results; Cook Political Report race ratings " +
-      "(April 2026); FEC fundraising data Q1 2026; historical Georgia Senate results 2020–2022.",
+      "Sources: FEC fundraising filings Q1 2026; Cook Political Report, Sabato's Crystal Ball, " +
+      "Inside Elections race ratings (May 2026); Georgia Secretary of State 2024 certified results; " +
+      "analyst assessment of Collins candidacy based on GA-10 electoral history.",
     candidates:
-      "Sources: Ballotpedia candidate profiles; candidate campaign announcements; Georgia Secretary of " +
-      "State candidate filings; analyst assessments based on historical Georgia electoral dynamics.",
+      "Sources: Mike Collins FEC filings; Ballotpedia candidate profile; Collins congressional " +
+      "voting record (GovTrack, Congress.gov); Ossoff Senate record and campaign disclosures.",
     raceRatings:
-      "Sources: Cook Political Report, Sabato's Crystal Ball, Inside Elections, CNalysis (April 2026). " +
-      "Ratings reflect analyst judgment and are updated as conditions change.",
+      "Sources: Cook Political Report, Sabato's Crystal Ball, Inside Elections, CNalysis (May 2026). " +
+      "Ratings updated to reflect Collins as confirmed nominee.",
     fundraising:
-      "Source: Federal Election Commission (FEC) disclosure data. All figures in USD. Republican " +
-      "figures unavailable until nominee declares and files. FEC data through Q1 2026.",
+      "Source: Federal Election Commission (FEC) disclosure data. All figures in USD. " +
+      "Collins Q1–Q4 2025 figures represent his House re-election committee activity, not yet a Senate committee. " +
+      "Q1 2026 reflects first Senate fundraising quarter. FEC data through Q1 2026.",
     winProbabilityModel:
-      "Win probability estimates are analytical judgments derived from partisan lean, national " +
-      "environment, fundraising data, and historical comparable races. Not polling-derived. " +
-      "Methodology: Georgia PVI (R+3) adjusted for generic ballot, candidate quality, incumbent " +
-      "approval, and fundraising. Formula and estimates are the analyst's judgment, not a statistical model.",
+      "Win probability estimates are analytical judgments, not polling. Methodology: Georgia PVI (R+3) " +
+      "adjusted for current national environment, Collins-specific candidate quality assessment, " +
+      "fundraising disparity, and historical Georgia Senate comparable races (2020, 2021, 2022). " +
+      "Baseline of 51% reflects a credible-but-not-elite Republican nominee with a severe resource deficit.",
     milestones:
-      "Sources: Georgia Secretary of State election calendar; FEC filing deadlines; analyst-identified " +
-      "key indicators based on Georgia 2020–2022 race dynamics.",
+      "Sources: Georgia Secretary of State election calendar; FEC filing deadlines; analyst assessment " +
+      "of key decision points specific to the Collins candidacy.",
     probabilityTracker:
-      "All probability estimates are analytical judgments, not polling. Updated as new information " +
-      "becomes available. Represents estimated probability of the Democratic candidate winning.",
+      "All probability estimates are analytical judgments, not polling. Represents estimated probability " +
+      "of Ossoff winning specifically against Collins as the Republican nominee.",
     electorate:
       "Sources: Georgia Secretary of State certified results 2020–2024; Georgia voter registration " +
-      "data 2026; Ballotpedia county-level election results."
+      "data 2026; Ballotpedia county-level results; GA-10 district historical results."
   },
 
   // ---------------------------------------------------------------------------
@@ -457,5 +472,4 @@ const dashboardData = {
 
 };
 
-// Publish to window so app.js can access it.
 window.dashboardData = dashboardData;
