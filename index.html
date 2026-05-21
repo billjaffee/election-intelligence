@@ -52,19 +52,44 @@
             <p class="hero-banner-prob-label" id="hero-prob-label">Democratic Win Probability</p>
           </div>
 
-          <div class="hero-banner-bar-wrap">
-            <div class="hero-banner-bar" role="img" aria-label="Democrat versus Republican win share">
-              <div class="hbb-dem" id="hero-bar-dem"></div>
-              <div class="hbb-rep" id="hero-bar-rep"></div>
-            </div>
-            <div class="hero-banner-bar-labels">
-              <span class="hbb-label hbb-label--dem">
-                <span class="hbb-cand" id="hero-dem-cand">—</span>
-                <span class="hbb-pct"  id="hero-dem-pct">—</span>
-              </span>
+          <div class="hero-dial-wrap" role="img" aria-label="Democrat versus Republican win-probability dial">
+            <svg class="hero-dial" viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="hero-dial-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%"   stop-color="#7f0c21"/>
+                  <stop offset="14%"  stop-color="#9f1239"/>
+                  <stop offset="28%"  stop-color="#be123c"/>
+                  <stop offset="42%"  stop-color="#f87171"/>
+                  <stop offset="50%"  stop-color="#d1d5db"/>
+                  <stop offset="58%"  stop-color="#93c5fd"/>
+                  <stop offset="72%"  stop-color="#1d4ed8"/>
+                  <stop offset="86%"  stop-color="#1e3a8a"/>
+                  <stop offset="100%" stop-color="#172554"/>
+                </linearGradient>
+              </defs>
+              <path d="M 25 120 A 95 95 0 0 1 215 120"
+                    stroke="url(#hero-dial-grad)"
+                    stroke-width="20"
+                    fill="none"
+                    stroke-linecap="round"/>
+              <line x1="120" y1="22" x2="120" y2="38"
+                    stroke="rgba(26,25,40,.35)" stroke-width="2" stroke-linecap="round"/>
+              <g class="hero-dial-needle" id="hero-dial-needle">
+                <line x1="120" y1="120" x2="120" y2="32"
+                      stroke="#1a1928" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="120" cy="32"  r="4"  fill="#1a1928"/>
+                <circle cx="120" cy="120" r="11" fill="#1a1928"/>
+                <circle cx="120" cy="120" r="4"  fill="#fff"/>
+              </g>
+            </svg>
+            <div class="hero-dial-labels">
               <span class="hbb-label hbb-label--rep">
-                <span class="hbb-pct"  id="hero-rep-pct">—</span>
                 <span class="hbb-cand" id="hero-rep-cand">—</span>
+                <span class="hbb-pct"  id="hero-rep-pct">—</span>
+              </span>
+              <span class="hbb-label hbb-label--dem">
+                <span class="hbb-pct"  id="hero-dem-pct">—</span>
+                <span class="hbb-cand" id="hero-dem-cand">—</span>
               </span>
             </div>
           </div>

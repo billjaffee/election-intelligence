@@ -490,21 +490,21 @@
       const heroMain   = $("hero-prob-main");
       const heroDemPct = $("hero-dem-pct");
       const heroRepPct = $("hero-rep-pct");
-      const heroBarDem = $("hero-bar-dem");
-      const heroBarRep = $("hero-bar-rep");
+      const heroNeedle = $("hero-dial-needle");
       const heroLabel  = $("hero-prob-label");
       if (heroMain) {
-        heroMain.textContent = `${prob}%`;
         if (prob >= 54) {
+          heroMain.textContent = `${prob}%`;
           heroMain.style.color = "var(--dem)";
           heroMain.style.setProperty("--hero-glow", "rgba(29,78,216,.45)");
           if (heroLabel) heroLabel.textContent = "Democratic Win Probability";
         } else if (prob <= 46) {
+          heroMain.textContent = `${100 - prob}%`;
           heroMain.style.color = "var(--rep)";
           heroMain.style.setProperty("--hero-glow", "rgba(190,18,60,.45)");
           if (heroLabel) heroLabel.textContent = "Republican Win Probability";
-          if (heroMain) heroMain.textContent = `${100 - prob}%`;
         } else {
+          heroMain.textContent = `${prob}%`;
           heroMain.style.color = "var(--text-primary)";
           heroMain.style.setProperty("--hero-glow", "rgba(26,25,40,.30)");
           if (heroLabel) heroLabel.textContent = "Democratic Win Probability";
@@ -512,8 +512,11 @@
       }
       if (heroDemPct) heroDemPct.textContent = `${prob}%`;
       if (heroRepPct) heroRepPct.textContent = `${100 - prob}%`;
-      if (heroBarDem) heroBarDem.style.width = `${prob}%`;
-      if (heroBarRep) heroBarRep.style.width = `${100 - prob}%`;
+      if (heroNeedle) {
+        // 0% Dem → -90° (full Rep, left); 50% → 0°; 100% → +90° (full Dem, right)
+        const rotation = (prob - 50) * 1.8;
+        heroNeedle.style.transform = `rotate(${rotation}deg)`;
+      }
     }
   }
 
