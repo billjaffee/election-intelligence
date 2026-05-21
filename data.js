@@ -78,20 +78,20 @@ const dashboardData = {
       "Average is computed from the entries below; add polls manually as they are published.",
     polls: [
       {
+        pollster:   "Echelon Insights",
+        date:       "2026-04",
+        sampleSize: null,
+        ossoff:     51,
+        collins:    44,
+        link:       null
+      },
+      {
         pollster:   "Emerson College Polling",
         date:       "2026-03-02",
         sampleSize: 1000,
         ossoff:     48,
         collins:    43,
         link:       "https://emersoncollegepolling.com/georgia-2026-poll-senator-ossoff-starts-re-election-near-50-and-outpaces-gop-field/"
-      },
-      {
-        pollster:   "Quantus Insights",
-        date:       "2025-09-12",
-        sampleSize: 624,
-        ossoff:     38,
-        collins:    38,
-        link:       "https://polls.quantusinsights.org/"
       }
     ]
   },
@@ -232,10 +232,10 @@ const dashboardData = {
     },
     {
       date:        "2026-05-19",
-      title:       "Georgia Primary — Collins Confirmed",
-      description: "Collins wins the Republican primary, becoming the nominee. Watch his primary margin and whether he unifies the party cleanly or faces lingering intra-party friction.",
+      title:       "Georgia Republican Primary — Runoff Required",
+      description: "AP calls the GOP primary for a runoff: Collins 41.6%, Dooley 28.5%, Carter 25.8% with 59% of the vote counted. Collins falls short of an outright win but leads by ~13 points heading into the runoff.",
       status:      "happened",
-      notes:       "Collins advances as Republican nominee. General election campaign begins.",
+      notes:       "Governor Kemp endorsed Dooley after deciding against his own Senate bid. Collins faces a House Ethics inquiry over intern-relationship claims.",
       emphasis:    true
     },
     {
