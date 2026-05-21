@@ -178,8 +178,8 @@ const dashboardData = {
         max:        3,
         step:       1,
         default:    0,
-        impactMap:  { "-3": 6, "-2": 4, "-1": 2, "0": 0, "1": -2, "2": -4, "3": -6 },
-        labels:     { "-3": "Gap widens", "-2": "D still dominant", "-1": "D slight edge", "0": "Current gap", "1": "Collins competitive", "2": "Collins near-parity", "3": "Collins surpasses" },
+        impactMap:  { "-3": 8, "-2": 5, "-1": 2, "0": 0, "1": -2, "2": -4, "3": -6 },
+        labels:     { "-3": "Gap widens", "-2": "D still dominant", "-1": "D slight edge", "0": "Current gap", "1": "Collins narrows gap", "2": "Collins competitive", "3": "Collins reaches parity" },
         note:       "Collins needs ~$10M by Q3 to run a credible air war in Atlanta markets. This is the highest-impact variable."
       },
       {

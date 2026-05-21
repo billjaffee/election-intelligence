@@ -13,6 +13,9 @@
 </head>
 <body>
 
+  <!-- ── Scroll progress bar (above nav) ──────────────────────────────────── -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
   <!-- ── Sticky nav ─────────────────────────────────────────────────────────── -->
   <header class="site-nav" id="site-nav">
     <div class="nav-inner">
@@ -35,12 +38,40 @@
 
   <main>
 
-    <!-- ── Overview (hero, dark) ────────────────────────────────────────────── -->
+    <!-- ── Overview (hero) ──────────────────────────────────────────────────── -->
     <section id="overview" class="section section--hero">
-      <div class="container">
-        <p class="eyebrow" id="overview-eyebrow"></p>
-        <h1 id="overview-title"></h1>
 
+      <!-- HERO BANNER — race name, massive prob, D vs R bar -->
+      <div class="hero-banner">
+        <div class="container">
+          <p class="hero-banner-eyebrow" id="overview-eyebrow"></p>
+          <h1 class="hero-banner-title"  id="overview-title"></h1>
+
+          <div class="hero-banner-prob-block">
+            <p class="hero-banner-prob-number" id="hero-prob-main">—</p>
+            <p class="hero-banner-prob-label" id="hero-prob-label">Democratic Win Probability</p>
+          </div>
+
+          <div class="hero-banner-bar-wrap">
+            <div class="hero-banner-bar" role="img" aria-label="Democrat versus Republican win share">
+              <div class="hbb-dem" id="hero-bar-dem"></div>
+              <div class="hbb-rep" id="hero-bar-rep"></div>
+            </div>
+            <div class="hero-banner-bar-labels">
+              <span class="hbb-label hbb-label--dem">
+                <span class="hbb-cand" id="hero-dem-cand">—</span>
+                <span class="hbb-pct"  id="hero-dem-pct">—</span>
+              </span>
+              <span class="hbb-label hbb-label--rep">
+                <span class="hbb-pct"  id="hero-rep-pct">—</span>
+                <span class="hbb-cand" id="hero-rep-cand">—</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
         <div class="metrics-grid" id="overview-metrics"></div>
 
         <div class="callout" id="overview-callout"></div>

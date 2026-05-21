@@ -106,6 +106,13 @@
     const title = $("overview-title");
     if (title) title.textContent = o.title || m.title || "";
 
+    // Hero banner — derive candidate names from the title ("Ossoff vs. Collins")
+    const titleParts = String(o.title || m.title || "").split(/\s+vs\.?\s+/i);
+    const demCandEl = $("hero-dem-cand");
+    const repCandEl = $("hero-rep-cand");
+    if (demCandEl) demCandEl.textContent = titleParts[0] || "Democrat";
+    if (repCandEl) repCandEl.textContent = titleParts[1] || "Republican";
+
     // Metrics grid
     const grid = $("overview-metrics");
     if (grid) {
@@ -478,6 +485,35 @@
 
       const needle = $("prob-needle");
       if (needle) needle.style.left = `${prob}%`;
+
+      // ── Hero banner sync ────────────────────────────────────────────────
+      const heroMain   = $("hero-prob-main");
+      const heroDemPct = $("hero-dem-pct");
+      const heroRepPct = $("hero-rep-pct");
+      const heroBarDem = $("hero-bar-dem");
+      const heroBarRep = $("hero-bar-rep");
+      const heroLabel  = $("hero-prob-label");
+      if (heroMain) {
+        heroMain.textContent = `${prob}%`;
+        if (prob >= 54) {
+          heroMain.style.color = "var(--dem)";
+          heroMain.style.setProperty("--hero-glow", "rgba(29,78,216,.45)");
+          if (heroLabel) heroLabel.textContent = "Democratic Win Probability";
+        } else if (prob <= 46) {
+          heroMain.style.color = "var(--rep)";
+          heroMain.style.setProperty("--hero-glow", "rgba(190,18,60,.45)");
+          if (heroLabel) heroLabel.textContent = "Republican Win Probability";
+          if (heroMain) heroMain.textContent = `${100 - prob}%`;
+        } else {
+          heroMain.style.color = "var(--text-primary)";
+          heroMain.style.setProperty("--hero-glow", "rgba(26,25,40,.30)");
+          if (heroLabel) heroLabel.textContent = "Democratic Win Probability";
+        }
+      }
+      if (heroDemPct) heroDemPct.textContent = `${prob}%`;
+      if (heroRepPct) heroRepPct.textContent = `${100 - prob}%`;
+      if (heroBarDem) heroBarDem.style.width = `${prob}%`;
+      if (heroBarRep) heroBarRep.style.width = `${100 - prob}%`;
     }
   }
 
@@ -705,6 +741,23 @@
   }
 
   // ---------------------------------------------------------------------------
+  // Scroll progress bar (fixed bar above nav, fills as the user scrolls)
+  // ---------------------------------------------------------------------------
+
+  function wireScrollProgress() {
+    const bar = $("scroll-progress");
+    if (!bar) return;
+    const update = () => {
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      const pct  = docH > 0 ? (window.scrollY / docH) * 100 : 0;
+      bar.style.width = `${Math.max(0, Math.min(100, pct))}%`;
+    };
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  }
+
+  // ---------------------------------------------------------------------------
   // Scroll-reveal (IntersectionObserver)
   // ---------------------------------------------------------------------------
 
@@ -739,6 +792,7 @@
     renderFooter();
     wireElectorateCollapse();
     wireNav();
+    wireScrollProgress();
     wireScrollReveal();
   });
 
