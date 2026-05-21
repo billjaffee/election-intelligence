@@ -22,14 +22,12 @@
       </button>
       <nav class="nav-menu" id="nav-menu">
         <ul class="nav-links">
-          <li><a href="#overview"           data-section="overview">Overview</a></li>
-          <li><a href="#model"              data-section="model">Model</a></li>
-          <li><a href="#candidates"         data-section="candidates">Candidates</a></li>
-          <li><a href="#ratings"            data-section="ratings">Ratings</a></li>
-          <li><a href="#fundraising"        data-section="fundraising">Fundraising</a></li>
-          <li><a href="#milestones"         data-section="milestones">Milestones</a></li>
-          <li><a href="#probability-tracker" data-section="probability-tracker">Probability</a></li>
-          <li><a href="#electorate"         data-section="electorate">Electorate</a></li>
+          <li><a href="#overview"    data-section="overview">Overview</a></li>
+          <li><a href="#model"       data-section="model">Model</a></li>
+          <li><a href="#ratings"     data-section="ratings">Ratings</a></li>
+          <li><a href="#polling"     data-section="polling">Polling</a></li>
+          <li><a href="#fundraising" data-section="fundraising">Fundraising</a></li>
+          <li><a href="#milestones"  data-section="milestones">Milestones</a></li>
         </ul>
       </nav>
     </div>
@@ -42,7 +40,6 @@
       <div class="container">
         <p class="eyebrow" id="overview-eyebrow"></p>
         <h1 id="overview-title"></h1>
-        <p class="lede" id="overview-subtitle"></p>
 
         <div class="metrics-grid" id="overview-metrics"></div>
 
@@ -71,6 +68,8 @@
               <p class="prob-tier" id="prob-tier">—</p>
             </div>
             <div class="prob-display-right">
+              <p class="prob-label">GOP Win Probability</p>
+              <p class="prob-number prob-number--rep" id="prob-number-rep">—</p>
               <p class="prob-baseline-label">Baseline: <span id="prob-baseline-val">—</span></p>
               <p class="prob-adjustment" id="prob-adjustment"></p>
             </div>
@@ -100,30 +99,39 @@
         <!-- Sliders -->
         <div class="model-sliders" id="model-sliders"></div>
 
-        <!-- Sensitivity table -->
-        <h3 class="subsection-heading" id="sensitivity-heading"></h3>
-        <div class="table-wrap">
-          <table class="data-table" id="sensitivity-table"></table>
+        <!-- Electorate (collapsible, moved from standalone section) -->
+        <div class="electorate-block">
+          <header class="electorate-header" id="electorate-header">
+            <div class="electorate-header-text">
+              <div class="section-label">District Profile</div>
+              <h3 class="section-heading" id="electorate-heading" style="margin-bottom:0.25rem">—</h3>
+              <p class="section-subheading" id="electorate-subheading"></p>
+            </div>
+            <button
+              type="button"
+              class="electorate-toggle-btn"
+              id="electorate-toggle"
+              aria-expanded="false"
+              aria-controls="electorate-collapse"
+              aria-label="Toggle electorate profile">
+              <span class="electorate-chevron" aria-hidden="true">▾</span>
+            </button>
+          </header>
+
+          <div class="electorate-collapse" id="electorate-collapse">
+            <div class="electorate-collapse-inner">
+              <p class="method-note" id="electorate-method-note"></p>
+              <div id="electorate-body"></div>
+              <p class="citation" data-citation-key="electorate"></p>
+            </div>
+          </div>
         </div>
 
         <p class="citation" data-citation-key="winProbabilityModel"></p>
       </div>
     </section>
 
-    <!-- ── Candidates ───────────────────────────────────────────────────────── -->
-    <section id="candidates" class="section reveal">
-      <div class="container">
-        <div class="section-label">Candidates</div>
-        <h2 class="section-heading">The Matchup</h2>
-        <p class="section-intro">
-          Head-to-head candidate profiles. Strengths, weaknesses, and strategic outlook for each side.
-        </p>
-        <div class="matchup-grid" id="matchup-grid"></div>
-        <p class="citation" data-citation-key="candidates"></p>
-      </div>
-    </section>
-
-    <!-- ── Race Ratings & National Environment ──────────────────────────────── -->
+    <!-- ── Race Ratings ─────────────────────────────────────────────────────── -->
     <section id="ratings" class="section section--alt reveal">
       <div class="container">
         <div class="section-label">External Forecasters</div>
@@ -137,11 +145,26 @@
           <table class="data-table" id="ratings-history-table"></table>
         </div>
 
-        <h3 class="subsection-heading">National Environment</h3>
-        <div class="env-grid" id="env-grid"></div>
-        <p class="analytical-note" id="env-note"></p>
-
         <p class="citation" data-citation-key="raceRatings"></p>
+      </div>
+    </section>
+
+    <!-- ── Public Polling ───────────────────────────────────────────────────── -->
+    <section id="polling" class="section reveal">
+      <div class="container">
+        <div class="section-label">Public Polling</div>
+        <h2 class="section-heading">Public Polling</h2>
+        <p class="section-intro" id="polling-intro"></p>
+
+        <div class="polling-average" id="polling-average"></div>
+
+        <div class="table-wrap" id="polling-table-wrap">
+          <table class="data-table" id="polling-table"></table>
+        </div>
+
+        <p class="polling-empty" id="polling-empty"></p>
+
+        <p class="citation" data-citation-key="polling"></p>
       </div>
     </section>
 
@@ -153,11 +176,6 @@
 
         <div class="fundraising-summary" id="fundraising-summary"></div>
         <div class="cash-compare-wrap" id="cash-compare-wrap"></div>
-
-        <h3 class="subsection-heading">Quarterly Breakdown</h3>
-        <div class="table-wrap">
-          <table class="data-table" id="fundraising-table"></table>
-        </div>
 
         <p class="analytical-note" id="fundraising-note"></p>
         <p class="citation" data-citation-key="fundraising"></p>
@@ -177,52 +195,6 @@
         </p>
         <ol class="milestone-list" id="milestone-list"></ol>
         <p class="citation" data-citation-key="milestones"></p>
-      </div>
-    </section>
-
-    <!-- ── Probability Tracker ──────────────────────────────────────────────── -->
-    <section id="probability-tracker" class="section section--alt reveal">
-      <div class="container">
-        <div class="section-label">Historical Estimates</div>
-        <h2 class="section-heading">Probability Tracker</h2>
-        <p class="section-intro" id="probability-description"></p>
-
-        <div class="chart-wrap">
-          <canvas id="probability-chart"></canvas>
-        </div>
-        <div class="probability-log" id="probability-log"></div>
-
-        <p class="citation" data-citation-key="probabilityTracker"></p>
-      </div>
-    </section>
-
-    <!-- ── Electorate (collapsible) ─────────────────────────────────────────── -->
-    <section id="electorate" class="section reveal">
-      <div class="container">
-        <header class="electorate-header" id="electorate-header">
-          <div class="electorate-header-text">
-            <div class="section-label">District Profile</div>
-            <h2 class="section-heading" id="electorate-heading" style="margin-bottom:0.25rem">—</h2>
-            <p class="section-subheading" id="electorate-subheading"></p>
-          </div>
-          <button
-            type="button"
-            class="electorate-toggle-btn"
-            id="electorate-toggle"
-            aria-expanded="false"
-            aria-controls="electorate-collapse"
-            aria-label="Toggle electorate profile">
-            <span class="electorate-chevron" aria-hidden="true">▾</span>
-          </button>
-        </header>
-
-        <div class="electorate-collapse" id="electorate-collapse">
-          <div class="electorate-collapse-inner">
-            <p class="method-note" id="electorate-method-note"></p>
-            <div id="electorate-body"></div>
-            <p class="citation" data-citation-key="electorate"></p>
-          </div>
-        </div>
       </div>
     </section>
 

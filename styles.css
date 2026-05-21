@@ -6,20 +6,20 @@
 /* ---------- Tokens --------------------------------------------------------- */
 
 :root {
-  /* Base palette — warm editorial tones */
+  /* Base palette — warm editorial tones (light mode) */
   --bg:              #f9f8f6;
   --bg-alt:          #f0eeeb;
-  --bg-hero:         #0c0f18;
-  --bg-hero-card:    #141828;
-  --bg-hero-border:  #2a2f45;
+  --bg-hero:         #e6e1d8;
+  --bg-hero-card:    #f9f8f6;
+  --bg-hero-border:  #d4ccc0;
 
   /* Text */
   --text-primary:    #1a1928;
   --text-body:       #374151;
-  --text-muted:      #6b7280;
-  --text-hero:       #ecedf2;
-  --text-hero-muted: #9199b3;
-  --text-hero-dim:   #5d6480;
+  --text-muted:      #4b5563;
+  --text-hero:       #1a1928;
+  --text-hero-muted: #374151;
+  --text-hero-dim:   #4b5563;
 
   /* Gold accent — editorial anchor */
   --gold:            #b8860b;
@@ -32,16 +32,16 @@
   --dem-strong:      #1e40af;
   --dem-soft:        #eff6ff;
   --dem-border:      #bfdbfe;
-  --dem-dark:        #93c5fd;   /* on dark backgrounds */
-  --dem-dark-soft:   #1e3a6e;
+  --dem-dark:        #1d4ed8;   /* readable on light backgrounds */
+  --dem-dark-soft:   #dbe7ff;
 
   /* Republican */
   --rep:             #be123c;
   --rep-strong:      #9f1239;
   --rep-soft:        #fff1f2;
   --rep-border:      #fecdd3;
-  --rep-dark:        #fca5a5;   /* on dark backgrounds */
-  --rep-dark-soft:   #5a1020;
+  --rep-dark:        #be123c;   /* readable on light backgrounds */
+  --rep-dark-soft:   #ffd9df;
 
   /* Toss-up / neutral */
   --tossup:          #7c3aed;
@@ -209,14 +209,14 @@ h4 { font-size: 1rem;    font-family: var(--font-body); }
   top: 0;
   z-index: 100;
   height: var(--nav-height);
-  background: rgba(12,15,24,.92);
+  background: rgba(249,248,246,.88);
   backdrop-filter: saturate(160%) blur(12px);
   -webkit-backdrop-filter: saturate(160%) blur(12px);
-  border-bottom: 1px solid var(--bg-hero-border);
+  border-bottom: 1px solid var(--border);
   transition: box-shadow .2s;
 }
 .site-nav.is-scrolled {
-  box-shadow: 0 4px 24px rgba(0,0,0,.35);
+  box-shadow: 0 4px 20px rgba(26,26,46,.08);
 }
 .nav-inner {
   max-width: var(--container-max);
@@ -233,7 +233,7 @@ h4 { font-size: 1rem;    font-family: var(--font-body); }
   font-size: .8rem;
   letter-spacing: .06em;
   text-transform: uppercase;
-  color: var(--gold-bright);
+  color: #1e3a8a;
   opacity: 1;
   white-space: nowrap;
   flex-shrink: 0;
@@ -250,17 +250,17 @@ h4 { font-size: 1rem;    font-family: var(--font-body); }
 .nav-links a {
   display: inline-block;
   padding: .38rem .7rem;
-  color: var(--text-hero-muted);
+  color: var(--text-body);
   font-size: .83rem;
   font-weight: 500;
   letter-spacing: .01em;
   border-radius: var(--radius-xs);
   transition: color .15s, background-color .15s;
 }
-.nav-links a:hover { color: var(--text-hero); background: rgba(255,255,255,.06); opacity: 1; }
+.nav-links a:hover { color: var(--text-primary); background: rgba(26,25,40,.05); opacity: 1; }
 .nav-links a.is-active {
-  color: var(--gold-bright);
-  background: rgba(212,160,23,.1);
+  color: #1e3a8a;
+  background: rgba(30,58,138,.1);
   opacity: 1;
 }
 .nav-hamburger {
@@ -275,7 +275,7 @@ h4 { font-size: 1rem;    font-family: var(--font-body); }
   display: block;
   width: 22px;
   height: 2px;
-  background: var(--text-hero-muted);
+  background: var(--text-body);
   border-radius: 2px;
   transition: transform .2s, opacity .2s;
 }
@@ -353,6 +353,11 @@ h4 { font-size: 1rem;    font-family: var(--font-body); }
 .metric-card--accent .metric-value {
   font-size: 2.5rem;
   color: var(--dem-dark);
+  letter-spacing: -.02em;
+}
+.metric-card--countdown .metric-value {
+  font-size: 2.5rem;
+  color: var(--text-primary);
   letter-spacing: -.02em;
 }
 
@@ -718,6 +723,56 @@ h4 { font-size: 1rem;    font-family: var(--font-body); }
 .cash-legend-dot--dem { background: var(--dem); }
 .cash-legend-dot--rep { background: var(--rep); }
 
+/* ---------- Public Polling ------------------------------------------------- */
+
+.polling-average {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.75rem;
+  box-shadow: var(--shadow-sm);
+}
+.polling-average-label {
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  color: var(--text-muted);
+  margin: 0 0 .35rem;
+}
+.polling-average-value {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: -.025em;
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin: 0 0 .35rem;
+}
+.polling-average-value--dem     { color: var(--dem); }
+.polling-average-value--rep     { color: var(--rep); }
+.polling-average-value--neutral { color: var(--text-primary); }
+.polling-average-sub {
+  font-size: .85rem;
+  color: var(--text-muted);
+  margin: 0;
+  font-family: var(--font-mono);
+}
+.polling-empty {
+  font-size: .95rem;
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  padding: 2.25rem 1rem;
+  background: var(--bg-alt);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  margin: 0;
+}
+.polling-empty:empty { display: none; }
+
 /* ---------- Tables --------------------------------------------------------- */
 
 .table-wrap {
@@ -795,9 +850,16 @@ h4 { font-size: 1rem;    font-family: var(--font-body); }
   font-weight: 700;
   letter-spacing: -.04em;
   line-height: 1;
-  color: var(--dem-dark);
+  color: var(--dem);
   margin: 0;
   transition: color .5s ease;
+}
+.prob-number--rep {
+  color: var(--rep);
+}
+.prob-display-right .prob-label,
+.prob-display-right .prob-tier {
+  text-align: right;
 }
 .prob-tier {
   font-size: 1.1rem;
@@ -1113,6 +1175,16 @@ input[type="range"]::-moz-range-thumb {
 
 /* ---------- Electorate (collapsible) --------------------------------------- */
 
+.electorate-block {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+.electorate-block .section-heading {
+  font-size: 1.55rem;
+}
+
+
 .electorate-header {
   display: flex;
   align-items: flex-start;
@@ -1324,7 +1396,7 @@ input[type="range"]::-moz-range-thumb {
   .prob-display       { flex-direction: column; gap: .75rem; }
   .prob-number        { font-size: 3.5rem; }
   .prob-display-right { text-align: left; }
-  .nav-menu           { display: none; position: fixed; inset: var(--nav-height) 0 0 0; background: rgba(12,15,24,.97); padding: 1.5rem; z-index: 99; }
+  .nav-menu           { display: none; position: fixed; inset: var(--nav-height) 0 0 0; background: rgba(249,248,246,.98); padding: 1.5rem; z-index: 99; border-bottom: 1px solid var(--border); }
   .nav-menu.is-open   { display: block; }
   .nav-links          { flex-direction: column; gap: .25rem; }
   .nav-links a        { font-size: 1rem; padding: .65rem 1rem; }

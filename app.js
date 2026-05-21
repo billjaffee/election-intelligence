@@ -106,18 +106,27 @@
     const title = $("overview-title");
     if (title) title.textContent = o.title || m.title || "";
 
-    const sub = $("overview-subtitle");
-    if (sub) sub.textContent = o.subtitle || "";
-
     // Metrics grid
     const grid = $("overview-metrics");
     if (grid) {
       grid.innerHTML = "";
       (o.metrics || []).forEach((metric) => {
+        let value = metric.value;
+        if (metric.dynamic === "countdown" && metric.target) {
+          const target = new Date(metric.target + "T00:00:00");
+          const today  = new Date();
+          today.setHours(0, 0, 0, 0);
+          const days = Math.max(0, Math.ceil((target - today) / 86400000));
+          value = String(days);
+        }
+        const classes =
+          "metric-card"
+          + (metric.accent  ? " metric-card--accent"   : "")
+          + (metric.variant ? ` metric-card--${metric.variant}` : "");
         grid.appendChild(
-          el("div", { class: "metric-card" + (metric.accent ? " metric-card--accent" : "") }, [
+          el("div", { class: classes }, [
             el("p", { class: "metric-label" }, metric.label || ""),
-            el("p", { class: "metric-value"  }, String(metric.value ?? "—")),
+            el("p", { class: "metric-value"  }, String(value ?? "—")),
             metric.note ? el("p", { class: "metric-note" }, metric.note) : null
           ])
         );
@@ -147,56 +156,11 @@
   }
 
   // ---------------------------------------------------------------------------
-  // Candidates
-  // ---------------------------------------------------------------------------
-
-  function renderCandidates() {
-    const grid = $("matchup-grid");
-    if (!grid) return;
-    grid.innerHTML = "";
-
-    const sides = [
-      { key: "democrat",   cls: "candidate-card--dem" },
-      { key: "republican", cls: "candidate-card--rep"  }
-    ];
-
-    sides.forEach(({ key, cls }) => {
-      const c = (data.candidates || {})[key];
-      if (!c) return;
-
-      const badges = el("div", { class: "badge-group" });
-      badges.appendChild(el("span", { class: `party-badge party-badge--${c.partyKey || ""}` }, c.party || ""));
-      if (c.isIncumbent) badges.appendChild(el("span", { class: "incumbent-badge" }, "★ Incumbent"));
-      if (c.status && c.status !== "Declared") {
-        badges.appendChild(el("span", { class: "status-badge" }, c.status));
-      }
-
-      grid.appendChild(
-        el("article", { class: `candidate-card ${cls}` }, [
-          el("div", { class: "candidate-card-header" }, [
-            el("div", { class: "candidate-name-row" }, [
-              el("h3", { class: "candidate-name" }, c.name || "TBD"),
-              badges
-            ]),
-            el("p", { class: "candidate-one-liner" }, c.oneLiner || "")
-          ]),
-          c.notes
-            ? el("div", { class: "candidate-card-footer" }, [
-                el("p", { class: "candidate-notes" }, c.notes)
-              ])
-            : null
-        ])
-      );
-    });
-  }
-
-  // ---------------------------------------------------------------------------
-  // Race Ratings + National Environment
+  // Race Ratings
   // ---------------------------------------------------------------------------
 
   function renderRatings() {
     const rr = data.raceRatings || {};
-    const ne = data.nationalEnvironment || {};
 
     const intro = $("ratings-intro");
     if (intro) intro.textContent = rr.description || "";
@@ -247,55 +211,89 @@
       });
       histTable.appendChild(tbody);
     }
+  }
 
-    // National environment cards
-    const envGrid = $("env-grid");
-    if (envGrid) {
-      envGrid.innerHTML = "";
-      const gb = ne.genericBallot || {};
-      const pa = ne.presidentialApproval || {};
-      const wave = ne.waveEnvironment || "neutral";
+  // ---------------------------------------------------------------------------
+  // Public Polling
+  // ---------------------------------------------------------------------------
 
-      // Generic ballot
-      const gbAdv = gb.label || (gb.dem > gb.rep ? `D+${gb.dem - gb.rep}` : `R+${gb.rep - gb.dem}`);
-      const gbColor = gb.dem > gb.rep ? "dem" : "rep";
-      envGrid.appendChild(
-        el("div", { class: "env-card" }, [
-          el("p", { class: "env-label" }, `Generic ballot · ${gb.asOf ? fmtDate(gb.asOf) : ""}`),
-          el("p", { class: `env-value env-value--${gbColor}` }, gbAdv),
-          el("p", { class: "env-sub" }, gb.source || ""),
-          gb.dem && gb.rep ? el("p", { class: "env-sub" }, `D ${gb.dem}% · R ${gb.rep}%`) : null
-        ])
-      );
+  function renderPolling() {
+    const p     = data.polling || {};
+    const polls = (p.polls || []).slice().sort((a, b) => sortKey(b.date) > sortKey(a.date) ? 1 : -1);
 
-      // Presidential approval
-      const netColor = pa.net >= 0 ? "dem" : "rep";
-      envGrid.appendChild(
-        el("div", { class: "env-card" }, [
-          el("p", { class: "env-label" }, `Presidential approval · ${pa.asOf ? fmtDate(pa.asOf) : ""}`),
-          el("p", { class: `env-value env-value--${netColor}` }, (pa.net >= 0 ? "+" : "") + (pa.net || "—")),
-          el("p", { class: "env-sub" }, pa.source || ""),
-          pa.approve && pa.disapprove ? el("p", { class: "env-sub" }, `${pa.approve}% approve · ${pa.disapprove}% disapprove`) : null
-        ])
-      );
+    const intro = $("polling-intro");
+    if (intro) intro.textContent = p.description || "";
 
-      // Wave environment
-      const waveLabels = {
-        "strong-D": "Strong D Wave", "slight-D": "Slight D Wave",
-        "neutral":  "Neutral",       "slight-R": "Slight R Wave",
-        "strong-R": "Strong R Wave"
-      };
-      envGrid.appendChild(
-        el("div", { class: "env-card" }, [
-          el("p", { class: "env-label" }, "Wave environment"),
-          el("span", { class: "wave-badge", dataset: { wave } }, waveLabels[wave] || wave),
-          ne.historicalNote ? el("p", { class: "env-sub", style: "margin-top:.75rem" }, ne.historicalNote) : null
-        ])
-      );
+    const wrap     = $("polling-table-wrap");
+    const table    = $("polling-table");
+    const avgWrap  = $("polling-average");
+    const emptyEl  = $("polling-empty");
+
+    if (!polls.length) {
+      if (wrap)    wrap.style.display = "none";
+      if (avgWrap) avgWrap.style.display = "none";
+      if (emptyEl) emptyEl.textContent  = "No public polling available yet";
+      return;
     }
 
-    const envNote = $("env-note");
-    if (envNote) envNote.textContent = ne.historicalNote || "";
+    if (wrap)    wrap.style.display = "";
+    if (avgWrap) avgWrap.style.display = "";
+    if (emptyEl) emptyEl.textContent  = "";
+
+    // Polling average — single topline number (spread)
+    if (avgWrap) {
+      const avgOss = polls.reduce((s, x) => s + (x.ossoff  || 0), 0) / polls.length;
+      const avgCol = polls.reduce((s, x) => s + (x.collins || 0), 0) / polls.length;
+      const spread = avgOss - avgCol;
+      const leader = spread > 0 ? "Ossoff" : spread < 0 ? "Collins" : "Tied";
+      const sign   = spread > 0 ? "+" : spread < 0 ? "−" : "";
+      const mag    = Math.abs(spread).toFixed(1);
+      const color  = spread > 0 ? "dem" : spread < 0 ? "rep" : "neutral";
+      avgWrap.innerHTML = "";
+      avgWrap.appendChild(el("p",   { class: "polling-average-label" }, "Polling average"));
+      avgWrap.appendChild(el("p",   { class: `polling-average-value polling-average-value--${color}` },
+        spread === 0 ? "Tied" : `${leader} ${sign}${mag}`));
+      avgWrap.appendChild(el("p",   { class: "polling-average-sub" },
+        `Mean of ${polls.length} poll${polls.length === 1 ? "" : "s"} · Ossoff ${avgOss.toFixed(1)}% · Collins ${avgCol.toFixed(1)}%`));
+    }
+
+    // Poll table
+    if (table) {
+      table.innerHTML = "";
+      table.appendChild(
+        el("thead", {}, el("tr", {}, [
+          el("th", {}, "Pollster"),
+          el("th", {}, "Date"),
+          el("th", {}, "Sample"),
+          el("th", {}, "Ossoff %"),
+          el("th", {}, "Collins %"),
+          el("th", {}, "Spread"),
+          el("th", {}, "Source")
+        ]))
+      );
+      const tbody = el("tbody");
+      polls.forEach((poll) => {
+        const oss   = Number(poll.ossoff  || 0);
+        const col   = Number(poll.collins || 0);
+        const sprd  = oss - col;
+        const sprdLabel = sprd > 0 ? `Ossoff +${sprd.toFixed(1)}`
+          : sprd < 0 ? `Collins +${Math.abs(sprd).toFixed(1)}`
+          : "Tied";
+        const sprdClass = sprd > 0 ? "dem-val" : sprd < 0 ? "rep-val" : "varies";
+        tbody.appendChild(el("tr", {}, [
+          el("td", {}, poll.pollster || "—"),
+          el("td", {}, poll.date ? fmtDate(poll.date) : "—"),
+          el("td", { class: "numeric" }, poll.sampleSize != null ? `n=${poll.sampleSize}` : "—"),
+          el("td", { class: "dem-val" }, oss ? `${oss}%` : "—"),
+          el("td", { class: "rep-val" }, col ? `${col}%` : "—"),
+          el("td", { class: sprdClass }, sprdLabel),
+          el("td", {}, poll.link
+            ? el("a", { href: poll.link, target: "_blank", rel: "noopener" }, "View")
+            : "—")
+        ]));
+      });
+      table.appendChild(tbody);
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -376,40 +374,6 @@
       }
     }
 
-    // Quarterly table
-    const fTable = $("fundraising-table");
-    if (fTable) {
-      fTable.innerHTML = "";
-      fTable.appendChild(
-        el("thead", {}, el("tr", {}, [
-          el("th", {}, "Quarter"),
-          el("th", {}, "D Raised"),
-          el("th", {}, "D Spent"),
-          el("th", {}, "D Cash on Hand"),
-          el("th", {}, "R Raised"),
-          el("th", {}, "R Spent"),
-          el("th", {}, "R Cash on Hand"),
-          el("th", {}, "Note")
-        ]))
-      );
-      const tbody = el("tbody");
-      quarters.slice().reverse().forEach((q) => {
-        const d = q.dem || {};
-        const r = q.rep || {};
-        tbody.appendChild(el("tr", {}, [
-          el("td", {}, q.period || ""),
-          el("td", { class: d.raised != null ? "dem-val" : "null-val" }, d.raised != null ? fmtMoney(d.raised) : "—"),
-          el("td", { class: d.spent  != null ? "dem-val" : "null-val" }, d.spent  != null ? fmtMoney(d.spent)  : "—"),
-          el("td", { class: d.coh    != null ? "dem-val" : "null-val" }, d.coh    != null ? fmtMoney(d.coh)    : "—"),
-          el("td", { class: r.raised != null ? "rep-val" : "null-val" }, r.raised != null ? fmtMoney(r.raised) : "—"),
-          el("td", { class: r.spent  != null ? "rep-val" : "null-val" }, r.spent  != null ? fmtMoney(r.spent)  : "—"),
-          el("td", { class: r.coh    != null ? "rep-val" : "null-val" }, r.coh    != null ? fmtMoney(r.coh)    : "—"),
-          el("td", {}, q.note || "")
-        ]));
-      });
-      fTable.appendChild(tbody);
-    }
-
     const noteEl = $("fundraising-note");
     if (noteEl) noteEl.textContent = f.note || "";
   }
@@ -476,36 +440,6 @@
       });
     }
 
-    // Sensitivity table
-    const senHead = $("sensitivity-heading");
-    if (senHead) senHead.textContent = model.sensitivityHeading || "Sensitivity Analysis";
-
-    const senTable = $("sensitivity-table");
-    if (senTable) {
-      senTable.innerHTML = "";
-      senTable.appendChild(
-        el("thead", {}, el("tr", {}, [
-          el("th", {}, "Variable"),
-          el("th", {}, "Direction for Dem"),
-          el("th", {}, "Point impact")
-        ]))
-      );
-      const tbody = el("tbody");
-      (model.sensitivity || []).forEach((row) => {
-        const dirLabel = row.direction === "positive" ? "▲ Positive"
-          : row.direction === "negative" ? "▼ Negative"
-          : row.direction || "Varies";
-        tbody.appendChild(el("tr", {}, [
-          el("td", {}, row.variable || ""),
-          el("td", { class: row.direction === "positive" ? "positive"
-                         : row.direction === "negative" ? "negative"
-                         : "varies" }, dirLabel),
-          el("td", { class: "impact" }, row.impact || "")
-        ]));
-      });
-      senTable.appendChild(tbody);
-    }
-
     // Initial display
     updateProbDisplay();
 
@@ -518,9 +452,14 @@
       if (numEl) {
         numEl.textContent = `${prob}%`;
         // Color shifts with tier
-        numEl.style.color = prob >= 54 ? "var(--dem-dark)"
-          : prob <= 46                 ? "var(--rep-dark)"
-          : "#e2e8f0";
+        numEl.style.color = prob >= 54 ? "var(--dem)"
+          : prob <= 46                 ? "var(--rep)"
+          : "var(--text-primary)";
+      }
+
+      const repNumEl = $("prob-number-rep");
+      if (repNumEl) {
+        repNumEl.textContent = `${100 - prob}%`;
       }
 
       const tierEl = $("prob-tier");
@@ -590,101 +529,6 @@
         ])
       );
     });
-  }
-
-  // ---------------------------------------------------------------------------
-  // Probability Tracker
-  // ---------------------------------------------------------------------------
-
-  function renderProbabilityTracker() {
-    const tracker = data.probabilityTracker || {};
-    const descEl  = $("probability-description");
-    if (descEl) descEl.textContent = tracker.description || "";
-
-    const entries = (tracker.entries || []).slice();
-    const byDate  = (a, b) => sortKey(a.date) < sortKey(b.date) ? -1 : 1;
-    const chrono  = entries.slice().sort(byDate);
-    const reverse = entries.slice().sort((a, b) => -byDate(a, b));
-
-    // Log
-    const log = $("probability-log");
-    if (log) {
-      log.innerHTML = "";
-      reverse.forEach((e) => {
-        log.appendChild(
-          el("div", { class: "probability-entry" }, [
-            el("p", { class: "pe-date"   }, fmtDate(e.date)),
-            el("p", { class: "pe-value"  }, `${e.probability}%`),
-            el("p", { class: "pe-reason" }, e.reason || "")
-          ])
-        );
-      });
-    }
-
-    // Chart
-    const ctx = $("probability-chart");
-    if (window.Chart && ctx && chrono.length) {
-      new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: chrono.map((e) => fmtDate(e.date)),
-          datasets: [{
-            label: tracker.demLabel || "Dem win probability",
-            data:  chrono.map((e) => e.probability),
-            borderColor:     "#1d4ed8",
-            backgroundColor: "rgba(29,78,216,.08)",
-            fill:            true,
-            tension:         0.3,
-            pointRadius:     6,
-            pointHoverRadius:8,
-            pointBackgroundColor: "#1d4ed8",
-            pointBorderColor:     "#fff",
-            pointBorderWidth:     2,
-            borderWidth: 2.5
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: { label: (c) => ` ${c.parsed.y}%` },
-              backgroundColor: "#0c0f18",
-              titleColor: "#9199b3",
-              bodyColor: "#ecedf2",
-              borderColor: "#2a2f45",
-              borderWidth: 1,
-              padding: 12,
-              cornerRadius: 8
-            }
-          },
-          scales: {
-            y: {
-              min: 0,
-              max: 100,
-              ticks: {
-                color: "#6b7280",
-                font: { family: "'Space Mono', monospace", size: 11 },
-                callback: (v) => `${v}%`
-              },
-              grid: { color: "#e3ded6" }
-            },
-            x: {
-              ticks: {
-                color: "#6b7280",
-                font: { family: "'Space Mono', monospace", size: 11 }
-              },
-              grid: { display: false }
-            }
-          }
-        }
-      });
-
-      // Add 50% reference annotation manually
-      const orig = Chart.registry.plugins.get("tooltip");
-      Chart.defaults.plugins.annotation = {};
-    }
   }
 
   // ---------------------------------------------------------------------------
@@ -885,12 +729,11 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     renderOverview();
-    renderCandidates();
     renderRatings();
+    renderPolling();
     renderFundraising();
     renderWinModel();
     renderMilestones();
-    renderProbabilityTracker();
     renderElectorate();
     renderCitations();
     renderFooter();
